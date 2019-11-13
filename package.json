@@ -1,0 +1,21 @@
+{
+  "name": "my-koa",
+  "version": "1.0.0",
+  "description": "koa from zero , www.koajs.com.cn",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "koa"
+  ],
+  "author": "zheling",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
