@@ -1,6 +1,10 @@
 const Koa = require("koa");
 const KeyGrip = require("keygrip");
 const onerror = require("koa-onerror");
+const session = require('koa-session');
+const bodyparser = require("koa-bodyparser");
+const redisStore = require("koa-redis");
+const mongoose = require('mongoose');
 
 const MyLogger = require("./middleware/MyLogger");
 
@@ -21,18 +25,65 @@ app.keys = new KeyGrip(['im a newer secret', 'i like turtle'], 'sha256');
 app.context.myOwnExtendData = {greeting:"hello world"};
 //app.context end***********************************
 
+// session
+app.use(session({
+	key:"guan:session",
+	store:redisStore({})
+},app));
 
-// customize logger
+app.use(bodyparser({
+	enableTypes:['json', 'form', 'text']
+}));
+
+// static resources
+app.use(require('koa-static')(__dirname + '/public'));
+
+// use customize middleware : logger
 app.use(MyLogger());
 
 
+// 模板引擎 Must be used before any router is used
+app.use(require('koa-view')(__dirname + '/views'));
 
 
-app.use(async ctx => {
-	console.log(ctx.myOwnExtendData);
-	// ctx.cookies.set("guan",'this is a cookie from server',{signed:true});
-	ctx.body = 'Hello World 4000';
+// koa-router : routes handlers
+// 为了便于维护 , 将router对象单独拿出来
+let userRouter = require("./routers/user");
+app.use(userRouter.routes()).use(userRouter.allowedMethods());
+
+//连接mongoDB
+let dbConfig = require("./DB/db");
+mongoose.connect(dbConfig.db, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
 });
+
+
+
+
+//最后拦截的router
+app.use(async (ctx,next) => {
+	// ctx.cookies.set("guan",'this is a cookie from server',{signed:true});
+
+	// let count = ctx.session.count || 0;
+	// ctx.session.count = ++count;
+
+	// if(ctx.url === '/')
+	// 	await ctx.render('index', {
+	// 		user: 'Coder-Guan'
+	// 	});
+	// if(ctx.url === '/template')
+	// 	await ctx.render('./common/template', {
+	// 		title: 'template-default'
+	// 	});
+
+	//ctx.body = `${count} times`;
+
+	ctx.body = `not found request URL......`;
+});
+
+
+
 
 
 

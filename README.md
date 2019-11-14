@@ -2,11 +2,6 @@
 koa learning from zero and official website of Koa
 
 ## 1.初始化项目
-- 基本包
-```
-npm install koa -S
-npm install nodemon -D  
-```
 - 配置npm命令(package.json)
 ```
 "scripts": {
@@ -91,4 +86,42 @@ app.use(async(ctx,next)=>{
 })
 // 只需要返回一个函数作为app.use()的参数即可,所谓的中间件不过是一个函数,
 // 该中间件函数用于某些特定的功能,比如:logger,解析request数据,挂载额外扩展的信息等等
+```
+
+## 8.redis and session
+```bash
+
+启动redis : redis-server
+
+```
+
+## 9.static resource
+```javascript
+app.use(require('koa-static')(__dirname + '/public'));
+```
+
+## 10.模板引擎
+```javascript
+// 模板引擎 Must be used before any router is used
+app.use(require('koa-view')(__dirname + '/views'));
+```
+
+## 11.router路由
+```javascript
+var app = new Koa();
+var router = new Router();
+router.get('/', (ctx, next) => {
+  // ctx.router available
+});
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+//为了方便维护管理,一般将router拿出来单独成一个模块
+//将router实例导出即可
+```
+
+## 12.mongoose
+```javascript
+//api : https://mongoosejs.com/docs/models.html
+
 ```
