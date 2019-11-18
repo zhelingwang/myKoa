@@ -1,5 +1,6 @@
 # myKoa
-koa learning from zero and official website of Koa
+koa learning from zero and official website of Koa 
+(koa + mongoDB/mongoose + redis/koa-redis)
 
 ## 1.初始化项目
 - 配置npm命令(package.json)
