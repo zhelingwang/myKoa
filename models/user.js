@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 //define a model
 const UserSchema = new Schema({
 	name : String,
-	phone : Number,
+	phone : String,
 	age : Number
 });
 

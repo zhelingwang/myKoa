@@ -93,6 +93,17 @@ app.use(async(ctx,next)=>{
 
 启动redis : redis-server
 
+获取 ioRedis 客户端对象
+const Store = new Redis().client;
+
+const st = await Store.hset('fix','name',Math.random());
+saved! 使用redis可视化工具查看即可
+
+Store.hget("fix","name").then(res=>{
+    console.log(res);
+});
+
+详细操作可查看 package : ioredis
 ```
 
 ## 9.static resource
@@ -124,7 +135,7 @@ app
 ```javascript
 //api : https://mongoosejs.com/docs/models.html
 
-//1.通过Schema定义model
+//1.定义Schema来描述model即Collection的数据结构
 const UserSchema = new mongoose.Schema({
 	name : String,
 	phone : Number,
@@ -135,7 +146,10 @@ const UserSchema = new mongoose.Schema({
     //2.若某些属性在 create 时赋值为 ""/null , 那么Collection中存在该属性且值为 null
     //3.除定义的属性外其他属性不会被mongoose保存
     //4.在初始化时应注意属性的数据类型,如:Number赋值为空串,Collection中其值为0
+//视具体情况而定,多留心数据类型
 
-//2.访问model
-
+//2.创建model
+const User = mongoose.model('UserModel', UserSchema)
+//UserModel : CollectionName in DB
+//返回的User是一个Class,其包含对该Collection进行各种操作的api
 ```
