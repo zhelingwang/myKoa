@@ -153,3 +153,8 @@ const User = mongoose.model('UserModel', UserSchema)
 //UserModel : CollectionName in DB
 //返回的User是一个Class,其包含对该Collection进行各种操作的api
 ```
+## 13.koa-generator
+```text
+本项目是从零搭建一个基于Koa的项目结构,为的是更好的理解Koa的项目构建过程,实际开发中直接
+使用专门的生成器模板来高效的搭建项目.
+```
