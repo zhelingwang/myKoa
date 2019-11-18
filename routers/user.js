@@ -1,4 +1,7 @@
 var Router = require('koa-router');
+const Redis = require('koa-redis');
+
+const Store = new Redis().client;
 
 let router = new Router({
 	prefix: '/user'
@@ -11,11 +14,12 @@ const User = require("../models/user");
 //如何更好的处理 mongoose 操作的异步问题 ?
 
 router.post("/", async (ctx, next) => {
-
 	//console.log(ctx.request.body);
-
 	let userInstance = new User({
-		name: ctx.request.body.name
+		name: ctx.request.body.name,
+		age:666,
+		phone:' ',
+		otherAttr:"该属性并未被定义,故无法被保存"
 	});
 	//1.注意 save 异步的
 	let code;
@@ -26,22 +30,14 @@ router.post("/", async (ctx, next) => {
 		code = -1;
 	}
 
-	//other ways
-	/**
-	 Tank.create({ size: 'small' }, function (err, small) {
-		  if (err) return handleError(err);
-		  // saved!
-	  });
+	ctx.body = { code };
+});
 
-	 // or, for inserting large batches of documents
-	 Tank.insertMany([{ size: 'small' }], function(err) {
-
-		});
-	 */
-
-	ctx.body = {
-		code
-	};
+router.get('/fix',async function(ctx){
+	const st = await Store.hset('fix','name',Math.random());
+	ctx.body={
+		code:0
+	}
 });
 
 module.exports = router;

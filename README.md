@@ -124,4 +124,18 @@ app
 ```javascript
 //api : https://mongoosejs.com/docs/models.html
 
+//1.通过Schema定义model
+const UserSchema = new mongoose.Schema({
+	name : String,
+	phone : Number,
+	age : Number
+});
+//1.定义的属性在 mongoDB 中不一定都存在,
+    //1.若某些属性在 create 时没有为其指定值,那么Collection中不存在该属性,
+    //2.若某些属性在 create 时赋值为 ""/null , 那么Collection中存在该属性且值为 null
+    //3.除定义的属性外其他属性不会被mongoose保存
+    //4.在初始化时应注意属性的数据类型,如:Number赋值为空串,Collection中其值为0
+
+//2.访问model
+
 ```

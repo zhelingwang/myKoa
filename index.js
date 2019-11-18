@@ -60,7 +60,6 @@ mongoose.connect(dbConfig.db, {
 
 
 
-
 //最后拦截的router
 app.use(async (ctx,next) => {
 	// ctx.cookies.set("guan",'this is a cookie from server',{signed:true});
@@ -68,10 +67,12 @@ app.use(async (ctx,next) => {
 	// let count = ctx.session.count || 0;
 	// ctx.session.count = ++count;
 
-	// if(ctx.url === '/')
-	// 	await ctx.render('index', {
-	// 		user: 'Coder-Guan'
-	// 	});
+	if(ctx.url === '/')
+		ctx.cookies.set("guan",'this is a cookie from server');
+		await ctx.render('index', {
+			user: 'Coder-Guan'
+		});
+
 	// if(ctx.url === '/template')
 	// 	await ctx.render('./common/template', {
 	// 		title: 'template-default'
@@ -79,7 +80,7 @@ app.use(async (ctx,next) => {
 
 	//ctx.body = `${count} times`;
 
-	ctx.body = `not found request URL......`;
+	// ctx.body = `not found request URL......`;
 });
 
 
