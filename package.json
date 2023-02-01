@@ -22,7 +22,7 @@
     "koa-session": "^5.12.3",
     "koa-static": "^5.0.0",
     "koa-view": "^2.1.3",
-    "mongoose": "^5.7.10"
+    "mongoose": "^5.13.15"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
